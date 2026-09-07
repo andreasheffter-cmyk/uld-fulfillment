@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { sendInquiry } from "@/lib/inquiry";
 import { company, shopSystems, volumes } from "@/lib/site";
 
 const field =
@@ -8,21 +9,35 @@ const field =
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(data.entries());
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setError(null);
+    setSending(true);
     try {
-      const prev = JSON.parse(localStorage.getItem("uld-inquiries") ?? "[]") as unknown[];
-      localStorage.setItem(
-        "uld-inquiries",
-        JSON.stringify([{ ...payload, at: new Date().toISOString() }, ...prev].slice(0, 20)),
-      );
+      await sendInquiry({
+        data: {
+          name: String(data.get("name") ?? ""),
+          companyName: String(data.get("company") ?? ""),
+          email: String(data.get("email") ?? ""),
+          phone: String(data.get("phone") ?? ""),
+          shop: String(data.get("shop") ?? ""),
+          volume: String(data.get("volume") ?? ""),
+          message: String(data.get("message") ?? ""),
+        },
+      });
+      setSent(true);
     } catch {
-      /* ignore quota */
+      setError(
+        `Senden nicht möglich. Bitte direkt an ${company.email} schreiben oder ${company.phone} anrufen.`,
+      );
+    } finally {
+      setSending(false);
     }
-    setSent(true);
   }
 
   if (sent) {
@@ -36,7 +51,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
         </h3>
         <p className={`mt-3 max-w-md leading-relaxed ${inverted ? "text-cream/70" : "text-muted"}`}>
           {company.fulfillmentLead.name}, {company.fulfillmentLead.role}, meldet sich in der Regel
-          innerhalb eines Werktags. Für dringende Fälle: {company.phone}.
+          innerhalb eines Werktags unter {company.email}. Für dringende Fälle: {company.phone}.
         </p>
       </div>
     );
@@ -93,11 +108,14 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
         />
       </label>
       <div className="sm:col-span-2">
-        <Button type="submit" size="lg" className="w-full sm:w-auto">
-          Unverbindlich anfragen
+        {error ? (
+          <p className={`mb-3 text-sm ${inverted ? "text-cream" : "text-crimson"}`}>{error}</p>
+        ) : null}
+        <Button type="submit" size="lg" disabled={sending} className="w-full sm:w-auto">
+          {sending ? "Wird gesendet…" : "Unverbindlich anfragen"}
         </Button>
         <p className={`mt-3 text-xs leading-relaxed ${inverted ? "text-cream/45" : "text-fog"}`}>
-          Wir verwenden Ihre Angaben ausschließlich zur Bearbeitung der Anfrage. Hinweise in der{" "}
+          Die Anfrage geht an {company.email}. Hinweise in der{" "}
           <a href="/datenschutz" className="underline underline-offset-2">
             Datenschutzerklärung
           </a>
