@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { sendInquiry } from "@/lib/inquiry";
 import { company, shopSystems, volumes } from "@/lib/site";
 
 const field =
@@ -37,12 +38,23 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
         body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
         redirect: "manual",
       });
-      const ok =
+      const stored =
         res.ok ||
         res.type === "opaqueredirect" ||
         res.status === 0 ||
         (res.status >= 200 && res.status < 400);
-      if (!ok) throw new Error(String(res.status));
+      if (!stored) throw new Error(String(res.status));
+      await sendInquiry({
+        data: {
+          name: fields.name,
+          companyName: fields.company,
+          email: fields.email,
+          phone: fields.phone,
+          shop: fields.shop,
+          volume: fields.volume,
+          message: fields.message,
+        },
+      }).catch(() => undefined);
       setSent(true);
     } catch {
       setError(
