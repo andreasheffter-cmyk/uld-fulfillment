@@ -1,22 +1,106 @@
-import { useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { company, shopSystems, volumes } from "@/lib/site";
 
 const field =
   "h-11 w-full border-0 bg-paper px-3.5 text-[0.95rem] text-ink shadow-[0_0_0_1px_rgb(6_63_112_/_0.16)] outline-none transition-[box-shadow] placeholder:text-fog focus:shadow-[0_0_0_2px_#d13c22]";
 
-/** Registered Netlify form endpoint — must be the live origin so preview and production both send. */
-const FORM_ACTION = "https://uld-fulfillment.netlify.app/form-angebot.html";
+function payloadFromForm(form: HTMLFormElement) {
+  const fd = new FormData(form);
+  return {
+    name: String(fd.get("name") ?? ""),
+    company: String(fd.get("company") ?? ""),
+    email: String(fd.get("email") ?? ""),
+    phone: String(fd.get("phone") ?? ""),
+    shop: String(fd.get("shop") ?? ""),
+    volume: String(fd.get("volume") ?? ""),
+    message: String(fd.get("message") ?? ""),
+  };
+}
+
+async function postNetlify(fields: Record<string, string>) {
+  const res = await fetch("/form-angebot.html", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
+  });
+  if (!res.ok) throw new Error(String(res.status));
+}
+
+async function postMailbox(fields: Record<string, string>) {
+  await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(company.email)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      Name: fields.name,
+      Firma: fields.company,
+      Email: fields.email,
+      Telefon: fields.phone,
+      Shopsystem: fields.shop,
+      Volumen: fields.volume,
+      Vorhaben: fields.message,
+      _subject: `ULD Fulfillment: Angebotsanfrage von ${fields.company}`,
+      _template: "box",
+      _captcha: "false",
+      _replyto: fields.email,
+      _cc: company.fulfillmentLead.email,
+    }),
+  });
+}
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
+  const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("gesendet") === "1") {
+      setSent(true);
+    }
+  }, []);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fields = payloadFromForm(e.currentTarget);
+    setError(null);
+    setSending(true);
+    try {
+      await postNetlify(fields);
+      void postMailbox(fields).catch(() => undefined);
+      setSent(true);
+    } catch {
+      setError(
+        `Senden nicht möglich. Bitte direkt an ${company.email} schreiben oder ${company.phone} anrufen.`,
+      );
+    } finally {
+      setSending(false);
+    }
+  }
+
+  if (sent) {
+    return (
+      <div className={inverted ? "text-cream" : "text-ink"}>
+        <div className="flex size-12 items-center justify-center bg-crimson text-cream">
+          <Check className="size-6" strokeWidth={2.4} />
+        </div>
+        <h3 className="mt-5 font-display text-3xl font-bold tracking-tight">
+          Anfrage ist raus.
+        </h3>
+        <p className={`mt-3 max-w-md leading-relaxed ${inverted ? "text-cream/70" : "text-muted"}`}>
+          {company.fulfillmentLead.name}, {company.fulfillmentLead.role}, meldet sich in der Regel
+          innerhalb eines Werktags unter {company.email}. Für dringende Fälle: {company.phone}.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form
       name="angebot"
       method="POST"
-      action={FORM_ACTION}
-      onSubmit={() => setSending(true)}
+      action="/kontakt?gesendet=1"
+      onSubmit={onSubmit}
       className="grid gap-4 sm:grid-cols-2"
     >
       <input type="hidden" name="form-name" value="angebot" />
@@ -75,6 +159,9 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
         />
       </label>
       <div className="sm:col-span-2">
+        {error ? (
+          <p className={`mb-3 text-sm ${inverted ? "text-cream" : "text-crimson"}`}>{error}</p>
+        ) : null}
         <Button type="submit" size="lg" disabled={sending} className="w-full sm:w-auto">
           {sending ? "Wird gesendet…" : "Unverbindlich anfragen"}
         </Button>
