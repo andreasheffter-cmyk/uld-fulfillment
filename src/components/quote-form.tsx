@@ -7,6 +7,8 @@ import { company, shopSystems, volumes } from "@/lib/site";
 const field =
   "h-11 w-full border-0 bg-paper px-3.5 text-[0.95rem] text-ink shadow-[0_0_0_1px_rgb(6_63_112_/_0.16)] outline-none transition-[box-shadow] placeholder:text-fog focus:shadow-[0_0_0_2px_#d13c22]";
 
+const MAIL_ENDPOINT = "https://uld-fulfillment.netlify.app/.netlify/functions/anfrage";
+
 function payloadFromForm(form: HTMLFormElement) {
   const fd = new FormData(form);
   return {
@@ -18,6 +20,31 @@ function payloadFromForm(form: HTMLFormElement) {
     volume: String(fd.get("volume") ?? ""),
     message: String(fd.get("message") ?? ""),
   };
+}
+
+async function deliver(fields: ReturnType<typeof payloadFromForm>) {
+  try {
+    await sendInquiry({
+      data: {
+        name: fields.name,
+        companyName: fields.company,
+        email: fields.email,
+        phone: fields.phone,
+        shop: fields.shop,
+        volume: fields.volume,
+        message: fields.message,
+      },
+    });
+    return;
+  } catch {
+    /* same-origin server fn may be missing on Vercel — fall through */
+  }
+  const res = await fetch(MAIL_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(fields),
+  });
+  if (!res.ok) throw new Error(String(res.status));
 }
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
@@ -32,29 +59,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
     setError(null);
     setSending(true);
     try {
-      const res = await fetch("/form-angebot.html", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
-        redirect: "manual",
-      });
-      const stored =
-        res.ok ||
-        res.type === "opaqueredirect" ||
-        res.status === 0 ||
-        (res.status >= 200 && res.status < 400);
-      if (!stored) throw new Error(String(res.status));
-      await sendInquiry({
-        data: {
-          name: fields.name,
-          companyName: fields.company,
-          email: fields.email,
-          phone: fields.phone,
-          shop: fields.shop,
-          volume: fields.volume,
-          message: fields.message,
-        },
-      }).catch(() => undefined);
+      await deliver(fields);
       setSent(true);
     } catch {
       setError(
@@ -83,13 +88,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
   }
 
   return (
-    <form
-      name="angebot"
-      method="POST"
-      action=""
-      onSubmit={onSubmit}
-      className="grid gap-4 sm:grid-cols-2"
-    >
+    <form name="angebot" method="POST" action="" onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
       <input type="hidden" name="form-name" value="angebot" />
       <p className="hidden">
         <label>
