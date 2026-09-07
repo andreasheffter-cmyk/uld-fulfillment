@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { company, shopSystems, volumes } from "@/lib/site";
@@ -19,55 +19,30 @@ function payloadFromForm(form: HTMLFormElement) {
   };
 }
 
-async function postNetlify(fields: Record<string, string>) {
-  const res = await fetch("/form-angebot.html", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
-  });
-  if (!res.ok) throw new Error(String(res.status));
-}
-
-async function postMailbox(fields: Record<string, string>) {
-  await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(company.email)}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      Name: fields.name,
-      Firma: fields.company,
-      Email: fields.email,
-      Telefon: fields.phone,
-      Shopsystem: fields.shop,
-      Volumen: fields.volume,
-      Vorhaben: fields.message,
-      _subject: `ULD Fulfillment: Angebotsanfrage von ${fields.company}`,
-      _template: "box",
-      _captcha: "false",
-      _replyto: fields.email,
-      _cc: company.fulfillmentLead.email,
-    }),
-  });
-}
-
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("gesendet") === "1") {
-      setSent(true);
-    }
-  }, []);
-
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    e.stopPropagation();
     const fields = payloadFromForm(e.currentTarget);
     setError(null);
     setSending(true);
     try {
-      await postNetlify(fields);
-      void postMailbox(fields).catch(() => undefined);
+      const res = await fetch("/form-angebot.html", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
+        redirect: "manual",
+      });
+      const ok =
+        res.ok ||
+        res.type === "opaqueredirect" ||
+        res.status === 0 ||
+        (res.status >= 200 && res.status < 400);
+      if (!ok) throw new Error(String(res.status));
       setSent(true);
     } catch {
       setError(
@@ -99,7 +74,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
     <form
       name="angebot"
       method="POST"
-      action="/kontakt?gesendet=1"
+      action=""
       onSubmit={onSubmit}
       className="grid gap-4 sm:grid-cols-2"
     >

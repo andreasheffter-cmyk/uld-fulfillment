@@ -4,3 +4,11 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Stay on the branded domain — never send visitors to *.netlify.app
+[[redirects]]
+  from = "/*"
+  to = "https://uld-fulfillment.de/:splat"
+  status = 301
+  force = true
+  conditions = { Host = ["uld-fulfillment.netlify.app"] }
