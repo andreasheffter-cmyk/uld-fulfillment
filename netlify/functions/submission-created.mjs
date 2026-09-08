@@ -1,4 +1,4 @@
-const TO = "fulfillment@nordoo.de";
+const TO = "fulfillment@uld-hamburg.de";
 
 export async function handler(event) {
   try {
