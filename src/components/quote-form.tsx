@@ -1,13 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { sendInquiry } from "@/lib/inquiry";
 import { company, shopSystems, volumes } from "@/lib/site";
 
 const field =
   "h-11 w-full border-0 bg-paper px-3.5 text-[0.95rem] text-ink shadow-[0_0_0_1px_rgb(6_63_112_/_0.16)] outline-none transition-[box-shadow] placeholder:text-fog focus:shadow-[0_0_0_2px_#d13c22]";
-
-const MAIL_ENDPOINT = "https://uld-fulfillment.netlify.app/.netlify/functions/anfrage";
 
 function payloadFromForm(form: HTMLFormElement) {
   const fd = new FormData(form);
@@ -22,29 +19,19 @@ function payloadFromForm(form: HTMLFormElement) {
   };
 }
 
-async function deliver(fields: ReturnType<typeof payloadFromForm>) {
-  try {
-    await sendInquiry({
-      data: {
-        name: fields.name,
-        companyName: fields.company,
-        email: fields.email,
-        phone: fields.phone,
-        shop: fields.shop,
-        volume: fields.volume,
-        message: fields.message,
-      },
-    });
-    return;
-  } catch {
-    /* same-origin server fn may be missing on Vercel — fall through */
-  }
-  const res = await fetch(MAIL_ENDPOINT, {
+async function postForm(fields: ReturnType<typeof payloadFromForm>) {
+  const res = await fetch("/form-angebot.html", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(fields),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ "form-name": "angebot", ...fields }).toString(),
+    redirect: "manual",
   });
-  if (!res.ok) throw new Error(String(res.status));
+  const ok =
+    res.ok ||
+    res.type === "opaqueredirect" ||
+    res.status === 0 ||
+    (res.status >= 200 && res.status < 400);
+  if (!ok) throw new Error(String(res.status));
 }
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
@@ -59,7 +46,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
     setError(null);
     setSending(true);
     try {
-      await deliver(fields);
+      await postForm(fields);
       setSent(true);
     } catch {
       setError(
@@ -80,8 +67,8 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
           Anfrage ist raus.
         </h3>
         <p className={`mt-3 max-w-md leading-relaxed ${inverted ? "text-cream/70" : "text-muted"}`}>
-          Das {company.fulfillmentLead.name} meldet sich in der Regel
-          innerhalb eines Werktags unter {company.email}. Für dringende Fälle: {company.phone}.
+          Das {company.fulfillmentLead.name} meldet sich in der Regel innerhalb eines Werktags
+          unter {company.email}. Für dringende Fälle: {company.phone}.
         </p>
       </div>
     );
