@@ -1,5 +1,4 @@
 const TO = "fulfillment@uld-hamburg.de";
-const CC = "andreas.heffter@uld-hamburg.de";
 
 export async function handler(event) {
   try {
@@ -27,7 +26,6 @@ export async function handler(event) {
         _template: "box",
         _captcha: "false",
         _replyto: data.email ?? "",
-        _cc: CC,
       }),
     });
 

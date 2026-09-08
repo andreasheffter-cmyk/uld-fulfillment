@@ -59,7 +59,7 @@ function About() {
               Ablauf, nicht in einer fernen Zentrale. Büro und Halle sitzen zusammen.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted">
-              Geschäftsführung: {company.directors.join(", ")}. Fulfillment verantwortet{" "}
+              Geschäftsführung: {company.directors.join(", ")}. Fulfillment verantwortet das{" "}
               {company.fulfillmentLead.name}.
             </p>
           </div>

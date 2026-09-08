@@ -38,9 +38,7 @@ function Kontakt() {
             <h2 className="font-display text-3xl font-bold tracking-tight text-navy">
               Fulfillment-Team
             </h2>
-            <p className="mt-3 leading-relaxed text-muted">
-              {company.fulfillmentLead.name}, {company.fulfillmentLead.role}
-            </p>
+            <p className="mt-3 leading-relaxed text-muted">ULD Fulfillment Team</p>
 
             <ul className="mt-8 space-y-5">
               <li className="flex gap-3">
@@ -58,7 +56,6 @@ function Kontakt() {
                   <a href={`mailto:${company.email}`} className="font-semibold text-navy">
                     {company.email}
                   </a>
-                  <p className="text-sm text-muted">{company.fulfillmentLead.email}</p>
                 </div>
               </li>
               <li className="flex gap-3">

@@ -80,7 +80,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
           Anfrage ist raus.
         </h3>
         <p className={`mt-3 max-w-md leading-relaxed ${inverted ? "text-cream/70" : "text-muted"}`}>
-          {company.fulfillmentLead.name}, {company.fulfillmentLead.role}, meldet sich in der Regel
+          Das {company.fulfillmentLead.name} meldet sich in der Regel
           innerhalb eines Werktags unter {company.email}. Für dringende Fälle: {company.phone}.
         </p>
       </div>

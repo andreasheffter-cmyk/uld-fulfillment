@@ -1,5 +1,4 @@
 const TO = "fulfillment@uld-hamburg.de";
-const CC = "andreas.heffter@uld-hamburg.de";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -32,7 +31,6 @@ export async function handler(event) {
         _template: "box",
         _captcha: "false",
         _replyto: data.email ?? "",
-        _cc: CC,
       }),
     });
     const text = await res.text();

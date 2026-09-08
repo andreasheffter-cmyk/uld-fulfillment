@@ -321,8 +321,7 @@ function Cta() {
             Lassen Sie uns über Ihr Volumen sprechen.
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-cream/75">
-            Unverbindlich, in der Regel innerhalb eines Werktags. {company.fulfillmentLead.name},{" "}
-            {company.fulfillmentLead.role}.
+            Unverbindlich, in der Regel innerhalb eines Werktags. {company.fulfillmentLead.name}.
           </p>
           <p className="mt-8 text-sm text-cream/55">
             {company.address}, {company.zip}

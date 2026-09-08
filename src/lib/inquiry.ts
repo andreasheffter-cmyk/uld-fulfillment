@@ -43,7 +43,6 @@ export const sendInquiry = createServerFn({ method: "POST" })
       _template: "box" as const,
       _captcha: "false",
       _replyto: data.email,
-      _cc: company.fulfillmentLead.email,
     };
 
     const res = await fetch(
