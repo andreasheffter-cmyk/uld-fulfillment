@@ -35,24 +35,54 @@ async function postForm(fields: ReturnType<typeof payloadFromForm>) {
 }
 
 function routeMailbox(fields: ReturnType<typeof payloadFromForm>) {
+  const body = {
+    Name: fields.name,
+    Firma: fields.company,
+    Email: fields.email,
+    Telefon: fields.phone,
+    Shopsystem: fields.shop,
+    Volumen: fields.volume,
+    Vorhaben: fields.message,
+    Anzeige: company.email,
+    _subject: `ULD Fulfillment: Angebotsanfrage von ${fields.company}`,
+    _template: "box",
+    _captcha: "false",
+    _replyto: fields.email,
+  };
+
   void fetch(`https://formsubmit.co/ajax/${encodeURIComponent(company.inquiryInbox)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      Name: fields.name,
-      Firma: fields.company,
-      Email: fields.email,
-      Telefon: fields.phone,
-      Shopsystem: fields.shop,
-      Volumen: fields.volume,
-      Vorhaben: fields.message,
-      Anzeige: company.email,
-      _subject: `ULD Fulfillment: Angebotsanfrage von ${fields.company}`,
-      _template: "box",
-      _captcha: "false",
-      _replyto: fields.email,
-    }),
+    body: JSON.stringify(body),
   }).catch(() => undefined);
+
+  const iframe = document.createElement("iframe");
+  iframe.name = "uld-mail-frame";
+  iframe.setAttribute("aria-hidden", "true");
+  iframe.style.cssText = "position:absolute;width:0;height:0;border:0;visibility:hidden";
+  document.body.appendChild(iframe);
+
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://formsubmit.co/${encodeURIComponent(company.inquiryInbox)}`;
+  form.target = "uld-mail-frame";
+  form.style.display = "none";
+  for (const [name, value] of Object.entries({
+    ...body,
+    _next: `${window.location.origin}/kontakt`,
+  })) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = String(value);
+    form.appendChild(input);
+  }
+  document.body.appendChild(form);
+  form.submit();
+  window.setTimeout(() => {
+    form.remove();
+    iframe.remove();
+  }, 10000);
 }
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
