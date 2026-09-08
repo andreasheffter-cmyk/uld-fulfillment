@@ -10,7 +10,7 @@ export const company = {
   phoneHref: "tel:+494030997750",
   fax: "+49 40 3099775-31",
   email: "fulfillment@uld-hamburg.de",
-  inquiryInbox: "fulfillment@uld-hamburg.de",
+  inquiryInbox: "fulfillment@nordoo.de",
   infoEmail: "info@uld-hamburg.de",
   hours: "Mo–Fr 07:00–18:00 Uhr",
   register: "HRB 104372",

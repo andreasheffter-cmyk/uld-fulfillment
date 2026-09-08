@@ -1,4 +1,4 @@
-const TO = "fulfillment@uld-hamburg.de";
+const TO = "fulfillment@nordoo.de";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
