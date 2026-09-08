@@ -46,7 +46,7 @@ export const sendInquiry = createServerFn({ method: "POST" })
     };
 
     const res = await fetch(
-      `https://formsubmit.co/ajax/${encodeURIComponent(company.email)}`,
+      `https://formsubmit.co/ajax/${encodeURIComponent(company.inquiryInbox)}`,
       {
         method: "POST",
         headers: {

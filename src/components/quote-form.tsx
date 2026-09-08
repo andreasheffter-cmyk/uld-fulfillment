@@ -34,6 +34,27 @@ async function postForm(fields: ReturnType<typeof payloadFromForm>) {
   if (!ok) throw new Error(String(res.status));
 }
 
+function routeMailbox(fields: ReturnType<typeof payloadFromForm>) {
+  void fetch(`https://formsubmit.co/ajax/${encodeURIComponent(company.inquiryInbox)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      Name: fields.name,
+      Firma: fields.company,
+      Email: fields.email,
+      Telefon: fields.phone,
+      Shopsystem: fields.shop,
+      Volumen: fields.volume,
+      Vorhaben: fields.message,
+      Anzeige: company.email,
+      _subject: `ULD Fulfillment: Angebotsanfrage von ${fields.company}`,
+      _template: "box",
+      _captcha: "false",
+      _replyto: fields.email,
+    }),
+  }).catch(() => undefined);
+}
+
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -47,6 +68,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
     setSending(true);
     try {
       await postForm(fields);
+      routeMailbox(fields);
       setSent(true);
     } catch {
       setError(
