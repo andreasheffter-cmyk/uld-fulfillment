@@ -1,8 +1,11 @@
+import { useI18n } from "@/lib/i18n";
+
 export type Crumb = { label: string; href?: string };
 
 export function Breadcrumb({ items }: { items: Crumb[] }) {
+  const { t } = useI18n();
   return (
-    <nav aria-label="Brotkrumen" className="mb-5">
+    <nav aria-label={t.meta.breadcrumb} className="mb-5">
       <ol className="flex flex-wrap items-center gap-x-2 text-sm text-cream/55">
         {items.map((item, i) => (
           <li key={item.label} className="flex items-center gap-x-2">

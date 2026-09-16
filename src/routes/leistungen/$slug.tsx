@@ -4,7 +4,8 @@ import { BrandBox } from "@/components/brand-box";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
-import { serviceBySlug, services } from "@/lib/site";
+import { localizedService, localizedServices, useI18n } from "@/lib/i18n";
+import { serviceBySlug } from "@/lib/site";
 import { serviceHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/leistungen/$slug")({
@@ -18,14 +19,16 @@ export const Route = createFileRoute("/leistungen/$slug")({
 });
 
 function ServicePage() {
-  const service = Route.useLoaderData();
-  const others = services.filter((s) => s.slug !== service.slug);
+  const meta = Route.useLoaderData();
+  const { t } = useI18n();
+  const service = localizedService(t, meta.slug) ?? meta;
+  const others = localizedServices(t).filter((s) => s.slug !== meta.slug);
 
   return (
     <main>
       <section className="relative min-h-[70svh] overflow-hidden bg-navy-mid text-cream">
         <img
-          src={service.image}
+          src={meta.image}
           alt={service.imageAlt}
           className="absolute inset-0 size-full object-cover"
         />
@@ -38,8 +41,8 @@ function ServicePage() {
         <div className="relative mx-auto flex min-h-[70svh] max-w-7xl flex-col justify-end px-5 pt-32 pb-16 md:px-8">
           <Breadcrumb
             items={[
-              { label: "Start", href: "/" },
-              { label: "Leistungen", href: "/leistungen" },
+              { label: t.nav.home, href: "/" },
+              { label: t.nav.services, href: "/leistungen" },
               { label: service.title },
             ]}
           />
@@ -63,7 +66,7 @@ function ServicePage() {
               to="/kontakt"
               className={cn(buttonVariants({ variant: "primary", size: "lg" }), "mt-4 inline-flex")}
             >
-              Angebot einholen
+              {t.nav.quote}
               <ArrowRight className="size-4" />
             </Link>
           </div>
@@ -71,7 +74,7 @@ function ServicePage() {
             <BrandBox>
               <div className="bg-paper p-7">
                 <h2 className="font-display text-2xl font-bold tracking-tight text-navy">
-                  Im Setup enthalten
+                  {t.included}
                 </h2>
                 <ul className="mt-5 space-y-3">
                   {service.bullets.map((b) => (
@@ -90,7 +93,7 @@ function ServicePage() {
       <section className="border-t border-line bg-paper py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="font-display text-3xl font-bold tracking-tight text-navy">
-            Weitere Leistungen
+            {t.moreServices}
           </h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {others.slice(0, 3).map((s) => (

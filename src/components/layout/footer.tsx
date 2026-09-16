@@ -1,34 +1,38 @@
 import { Link } from "@tanstack/react-router";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
-import { company, nav, services } from "@/lib/site";
+import { localizedServices, navLinks, useI18n } from "@/lib/i18n";
+import { company } from "@/lib/site";
 
 export function Footer() {
+  const { t } = useI18n();
+  const services = localizedServices(t);
+
   return (
     <footer className="bg-navy-mid text-cream">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8 md:py-20">
         <div className="md:col-span-4">
           <Logo inverted variant="horizontal" />
           <p className="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-cream/70">
-            E-Commerce-Fulfillment, Lager und Import aus einer Halle. Mitten im
-            Hamburger Hafen – scanbasiert und an Ihren Shop angebunden.
+            {t.company.footer}
           </p>
         </div>
 
         <div className="md:col-span-2">
           <p className="text-xs font-bold tracking-[0.14em] text-cream/45 uppercase">
-            Navigation
+            {t.meta.navMain}
           </p>
           <ul className="mt-4 space-y-2.5 text-[0.95rem]">
-            {nav.map((item) => (
+            {navLinks.map((item) => (
               <li key={item.href}>
                 <Link to={item.href} className="text-cream/75 hover:text-cream">
-                  {item.label}
+                  {t.nav[item.key]}
                 </Link>
               </li>
             ))}
             <li>
               <Link to="/kontakt" className="text-cream/75 hover:text-cream">
-                Kontakt
+                {t.nav.contact}
               </Link>
             </li>
           </ul>
@@ -36,7 +40,7 @@ export function Footer() {
 
         <div className="md:col-span-3">
           <p className="text-xs font-bold tracking-[0.14em] text-cream/45 uppercase">
-            Leistungen
+            {t.nav.services}
           </p>
           <ul className="mt-4 space-y-2.5 text-[0.95rem]">
             {services.map((s) => (
@@ -55,7 +59,7 @@ export function Footer() {
 
         <div className="md:col-span-3">
           <p className="text-xs font-bold tracking-[0.14em] text-cream/45 uppercase">
-            Standort
+            {t.nav.location}
           </p>
           <address className="mt-4 not-italic text-[0.95rem] leading-relaxed text-cream/75">
             {company.legal}
@@ -80,12 +84,13 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {company.legal}
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <LanguageSwitcher inverted />
             <Link to="/impressum" className="hover:text-cream">
-              Impressum
+              {t.nav.imprint}
             </Link>
             <Link to="/datenschutz" className="hover:text-cream">
-              Datenschutz
+              {t.nav.privacy}
             </Link>
             <a href="https://www.uld-hamburg.de" className="hover:text-cream">
               uld-hamburg.de

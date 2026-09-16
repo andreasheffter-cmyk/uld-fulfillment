@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
+import { useI18n } from "@/lib/i18n";
 import { company } from "@/lib/site";
 import { breadcrumbJsonLd, pageHead } from "@/lib/seo";
 
@@ -15,18 +16,22 @@ export const Route = createFileRoute("/datenschutz")({
 });
 
 function Datenschutz() {
+  const { t, locale } = useI18n();
   return (
     <main>
       <PageHero
-        eyebrow="Rechtliches"
-        title="Datenschutz"
+        eyebrow={t.pages.legal.eyebrow}
+        title={t.pages.legal.privacy}
         crumbs={[
-          { label: "Start", href: "/" },
-          { label: "Datenschutz" },
+          { label: t.nav.home, href: "/" },
+          { label: t.nav.privacy },
         ]}
       />
       <section className="bg-cream py-16">
         <article className="mx-auto max-w-3xl space-y-8 px-5 text-[0.95rem] leading-relaxed md:px-8">
+          {locale !== "de" ? (
+            <p className="border-l-4 border-crimson pl-4 text-muted">{t.meta.legalNote}</p>
+          ) : null}
           <p>
             Der Schutz Ihrer personenbezogenen Daten ist uns wichtig. Nachfolgend informieren
             wir gemäß Art. 13, 14 DSGVO über die Verarbeitung auf dieser Website.
@@ -73,9 +78,7 @@ function Datenschutz() {
           </section>
 
           <section>
-            <h2 className="font-display text-2xl font-semibold text-navy">
-              4. Schriftarten
-            </h2>
+            <h2 className="font-display text-2xl font-semibold text-navy">4. Schriftarten</h2>
             <p className="mt-2">
               Zur Darstellung werden Schriftarten von Google Fonts geladen. Dabei kann Ihre
               IP-Adresse an Google Ireland Limited übermittelt werden. Rechtsgrundlage ist Art.

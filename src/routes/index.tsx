@@ -4,15 +4,8 @@ import { BrandBox } from "@/components/brand-box";
 import { QuoteForm } from "@/components/quote-form";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
-import {
-  company,
-  faqs,
-  integrations,
-  processSteps,
-  services,
-  stats,
-  usps,
-} from "@/lib/site";
+import { interpolate, localizedServices, useI18n } from "@/lib/i18n";
+import { company, integrations } from "@/lib/site";
 import { faqJsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
@@ -37,11 +30,12 @@ function Home() {
 }
 
 function Hero() {
+  const { t } = useI18n();
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-navy-mid text-cream">
       <img
         src="/images/hero-dock.jpg"
-        alt="Fulfillment-Lager mit Laderampen im Hamburger Hafen – ULD United Logistics"
+        alt={t.home.heroAlt}
         className="absolute inset-0 size-full object-cover object-[70%_center]"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-mid/95 via-navy-mid/55 to-navy/15" />
@@ -52,21 +46,20 @@ function Hero() {
       />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pt-32 pb-16 md:justify-center md:px-8 md:pb-24">
-        <p className="text-sm font-bold text-navy-ice">{company.tagline}</p>
+        <p className="text-sm font-bold text-navy-ice">{t.company.tagline}</p>
         <h1 className="mt-4 max-w-4xl font-display text-[3.1rem] font-bold tracking-tight sm:text-6xl md:text-8xl">
-          Fulfillment mit Hafenanschluss.
+          {t.home.heroTitle}
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream/85 md:text-xl">
-          E-Commerce-Fulfillment aus dem Hamburger Hafen: wir lagern, kommissionieren und
-          versenden Ihre Bestellungen – scanbasiert, shopverbunden, europaweit.
+          {t.home.heroLead}
         </p>
         <div className="mt-9 flex flex-wrap items-center gap-3">
           <Link to="/kontakt" className={cn(buttonVariants({ variant: "primary", size: "lg" }))}>
-            Angebot einholen
+            {t.nav.quote}
             <ArrowRight className="size-4" />
           </Link>
           <Link to="/leistungen" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
-            Leistungen ansehen
+            {t.nav.viewServices}
           </Link>
         </div>
       </div>
@@ -75,10 +68,11 @@ function Hero() {
 }
 
 function Stats() {
+  const { t } = useI18n();
   return (
     <section className="border-b border-line bg-paper">
       <div className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
-        {stats.map((s) => (
+        {t.stats.map((s) => (
           <div key={s.label} className="px-5 py-8 md:px-8 md:py-10">
             <p className="font-display text-3xl font-bold tracking-tight text-navy md:text-4xl">
               {s.value}
@@ -92,25 +86,26 @@ function Stats() {
 }
 
 function Services() {
+  const { t } = useI18n();
+  const services = localizedServices(t);
   return (
     <section className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-bold text-navy">Leistungen</p>
+            <p className="text-sm font-bold text-navy">{t.home.servicesEyebrow}</p>
             <h2 className="mt-3 max-w-2xl font-display text-4xl font-bold tracking-tight text-navy md:text-6xl">
-              Vom Container bis zum Kundenpaket.
+              {t.home.servicesTitle}
             </h2>
             <p className="mt-4 max-w-xl text-[0.95rem] leading-relaxed text-muted">
-              ULD Fulfillment in Hamburg übernimmt Lagerung, Pick & Pack, Versand, Retouren
-              und Import in einer Halle an der Dradenaustraße 20 – mit eigenem Zolllager.
+              {t.home.servicesLead}
             </p>
           </div>
           <Link
             to="/leistungen"
             className="inline-flex items-center gap-2 text-sm font-bold text-navy"
           >
-            Alle Leistungen
+            {t.nav.allServices}
             <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -137,7 +132,7 @@ function Services() {
                   </h3>
                   <p className="mt-2 flex-1 text-[0.95rem] leading-relaxed text-muted">{s.teaser}</p>
                   <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-navy">
-                    Mehr erfahren
+                    {t.nav.more}
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </div>
@@ -151,13 +146,14 @@ function Services() {
 }
 
 function Split() {
+  const { t } = useI18n();
   return (
     <section className="bg-navy text-cream">
       <div className="grid md:grid-cols-2">
         <div className="relative min-h-[320px] md:min-h-[560px]">
           <img
             src="/images/warehouse-aisle.jpg"
-            alt="Bewegung im Schmalganglager der ULD-Halle im Hamburger Hafen"
+            alt={t.home.splitAlt}
             className="absolute inset-0 size-full object-cover"
           />
         </div>
@@ -166,21 +162,13 @@ function Split() {
             className="pointer-events-none absolute right-6 bottom-6 size-24 border-[8px] border-crimson"
             aria-hidden
           />
-          <p className="text-sm font-bold text-navy-ice">Standortvorteil</p>
+          <p className="text-sm font-bold text-navy-ice">{t.home.splitEyebrow}</p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
-            Ware kommt im Hafen an. Und bleibt im Hafen.
+            {t.home.splitTitle}
           </h2>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-cream/80">
-            Container vom Terminal, eigene Zollfläche, Fulfillment in derselben Halle.
-            Kein zweites Lager, keine zusätzliche Umfuhr. 28.164 m², 43 Tore, eigener
-            Speditionshof – Dradenaustraße 20.
-          </p>
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-cream/80">{t.home.splitLead}</p>
           <ul className="mt-8 space-y-3">
-            {[
-              "Eigenes Zolllager direkt am Terminalzugang",
-              "Amazon-, Shop- und ERP-Anbindung",
-              "B2B-Handelsbelieferung und B2C aus einem Bestand",
-            ].map((item) => (
+            {t.home.splitItems.map((item) => (
               <li key={item} className="flex items-start gap-3 text-[0.95rem]">
                 <Check className="mt-0.5 size-4 shrink-0 text-crimson" strokeWidth={2.4} />
                 <span className="text-cream/90">{item}</span>
@@ -191,7 +179,7 @@ function Split() {
             to="/standort"
             className={cn(buttonVariants({ variant: "primary", size: "md" }), "mt-8 w-fit")}
           >
-            Den Standort ansehen
+            {t.nav.seeLocation}
           </Link>
         </div>
       </div>
@@ -200,15 +188,16 @@ function Split() {
 }
 
 function Process() {
+  const { t } = useI18n();
   return (
     <section className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <p className="text-sm font-bold text-navy">Ablauf</p>
+        <p className="text-sm font-bold text-navy">{t.home.processEyebrow}</p>
         <h2 className="mt-3 max-w-2xl font-display text-4xl font-bold tracking-tight text-navy md:text-6xl">
-          So kommt die Bestellung raus.
+          {t.home.processTitle}
         </h2>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {processSteps.map((step) => (
+          {t.steps.map((step) => (
             <BrandBox key={step.n}>
               <article className="h-full bg-paper p-6 md:p-8">
                 <p className="font-display text-2xl font-bold text-navy">{step.n}</p>
@@ -224,7 +213,7 @@ function Process() {
           to="/ablauf"
           className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy"
         >
-          Ablauf im Detail
+          {t.nav.processDetail}
           <ArrowRight className="size-4" />
         </Link>
       </div>
@@ -233,12 +222,11 @@ function Process() {
 }
 
 function Integrations() {
+  const { t } = useI18n();
   return (
     <section className="border-y border-line bg-paper py-14 md:py-16">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <p className="text-center text-sm font-semibold text-muted">
-          Anbindung an die Systeme, mit denen Sie schon arbeiten
-        </p>
+        <p className="text-center text-sm font-semibold text-muted">{t.home.integrations}</p>
         <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           {integrations.map((name) => (
             <li
@@ -255,15 +243,16 @@ function Integrations() {
 }
 
 function Usps() {
+  const { t } = useI18n();
   return (
     <section className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <p className="text-sm font-bold text-navy">Warum ULD</p>
+        <p className="text-sm font-bold text-navy">{t.home.uspsEyebrow}</p>
         <h2 className="mt-3 max-w-2xl font-display text-4xl font-bold tracking-tight text-navy md:text-6xl">
-          Kein Standard-3PL. Ein Hafenbetrieb.
+          {t.home.uspsTitle}
         </h2>
         <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {usps.map((u) => (
+          {t.usps.map((u) => (
             <BrandBox key={u.title}>
               <article className="h-full bg-paper p-7 md:p-8">
                 <h3 className="font-display text-2xl font-bold tracking-tight text-navy">
@@ -280,17 +269,18 @@ function Usps() {
 }
 
 function Faq() {
+  const { t } = useI18n();
   return (
     <section className="bg-paper py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-12 md:px-8">
         <div className="md:col-span-4">
-          <p className="text-sm font-bold text-navy">FAQ</p>
+          <p className="text-sm font-bold text-navy">{t.home.faqEyebrow}</p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-navy md:text-5xl">
-            Häufige Fragen.
+            {t.home.faqTitle}
           </h2>
         </div>
         <div className="md:col-span-8">
-          {faqs.map((f) => (
+          {t.faqs.map((f) => (
             <details key={f.q} className="group border-b border-line py-5 first:pt-0">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl font-bold tracking-tight text-navy [&::-webkit-details-marker]:hidden">
                 {f.q}
@@ -308,6 +298,7 @@ function Faq() {
 }
 
 function Cta() {
+  const { t } = useI18n();
   return (
     <section className="relative overflow-hidden bg-navy py-20 text-cream md:py-28">
       <span
@@ -316,12 +307,12 @@ function Cta() {
       />
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 md:px-8 md:gap-16">
         <div>
-          <p className="text-sm font-bold text-navy-ice">Einstieg</p>
+          <p className="text-sm font-bold text-navy-ice">{t.home.ctaEyebrow}</p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-6xl">
-            Lassen Sie uns über Ihr Volumen sprechen.
+            {t.home.ctaTitle}
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-cream/75">
-            Unverbindlich, in der Regel innerhalb eines Werktags. {company.fulfillmentLead.name}.
+            {interpolate(t.home.ctaLead, { team: t.company.team })}
           </p>
           <p className="mt-8 text-sm text-cream/55">
             {company.address}, {company.zip}

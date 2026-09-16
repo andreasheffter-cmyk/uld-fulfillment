@@ -4,7 +4,7 @@ import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
-import { processSteps } from "@/lib/site";
+import { useI18n } from "@/lib/i18n";
 import { breadcrumbJsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/ablauf")({
@@ -19,24 +19,26 @@ export const Route = createFileRoute("/ablauf")({
 });
 
 function Ablauf() {
+  const { t } = useI18n();
+  const p = t.pages.process;
   return (
     <main>
       <PageHero
-        eyebrow="Ablauf"
-        title="Onboarding in Tagen, nicht Quartalen."
-        lead="Technische Anbindung, Erstbevorratung, Live-Gang. Danach läuft jede Bestellung scanbasiert durch dieselbe Kette."
+        eyebrow={p.eyebrow}
+        title={p.title}
+        lead={p.lead}
         image="/images/warehouse-aisle.jpg"
-        imageAlt="Fulfillment-Ablauf im Schmalganglager von ULD Hamburg"
+        imageAlt={p.imageAlt}
         crumbs={[
-          { label: "Start", href: "/" },
-          { label: "Ablauf" },
+          { label: t.nav.home, href: "/" },
+          { label: t.nav.process },
         ]}
       />
 
       <section className="bg-cream py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
           <ol className="relative border-l border-line pl-8 md:pl-10">
-            {processSteps.map((step) => (
+            {t.steps.map((step) => (
               <li key={step.n} className="relative pb-12 last:pb-0">
                 <span className="absolute top-0 -left-[2.55rem] grid size-8 place-items-center bg-navy font-display text-sm font-bold text-cream md:-left-[3.05rem]">
                   {step.n}
@@ -53,7 +55,7 @@ function Ablauf() {
             <BrandBox size="lg">
               <img
                 src="/images/ops-manager.jpg"
-                alt="ULD-Team mit Scanner im Fulfillment-Lager Hamburg"
+                alt={p.teamAlt}
                 className="aspect-video w-full object-cover"
               />
             </BrandBox>
@@ -66,20 +68,17 @@ function Ablauf() {
                   className="pointer-events-none absolute right-6 bottom-6 size-16 border-[6px] border-crimson/70"
                   aria-hidden
                 />
-                <h2 className="font-display text-3xl font-bold tracking-tight">
-                  Was wir von Ihnen brauchen
-                </h2>
+                <h2 className="font-display text-3xl font-bold tracking-tight">{p.needTitle}</h2>
                 <ul className="mt-5 space-y-2 text-[0.95rem] leading-relaxed text-cream/75">
-                  <li>Saubere Artikelstammdaten inkl. Maße, Gewicht, EAN/SKU</li>
-                  <li>Zugang zum Shop oder API-Dokumentation</li>
-                  <li>Packregeln, Beilagen, Carrier-Vorgaben</li>
-                  <li>Ein erstes Wareneingangsfenster</li>
+                  {p.need.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
                 </ul>
                 <Link
                   to="/kontakt"
                   className={cn(buttonVariants({ variant: "primary", size: "lg" }), "mt-8 inline-flex")}
                 >
-                  Onboarding starten
+                  {t.nav.startOnboarding}
                   <ArrowRight className="size-4" />
                 </Link>
               </div>

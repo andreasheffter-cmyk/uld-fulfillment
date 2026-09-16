@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
-import { services } from "@/lib/site";
+import { localizedServices, useI18n } from "@/lib/i18n";
 import { breadcrumbJsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/leistungen/")({
@@ -17,17 +17,20 @@ export const Route = createFileRoute("/leistungen/")({
 });
 
 function Leistungen() {
+  const { t } = useI18n();
+  const services = localizedServices(t);
+  const p = t.pages.services;
   return (
     <main>
       <PageHero
-        eyebrow="Leistungen"
-        title="Fulfillment, das am Hafen beginnt."
-        lead="Lagerung, Pick & Pack, Versand, Retouren, Value Added Services und Import – scanbasiert, in einer Halle, mit direktem Terminalzugang."
+        eyebrow={p.eyebrow}
+        title={p.title}
+        lead={p.lead}
         image="/images/pick-pack.jpg"
-        imageAlt="Pick-and-Pack im ULD-Fulfillment Hamburg: Kommissionierung am Packplatz"
+        imageAlt={p.imageAlt}
         crumbs={[
-          { label: "Start", href: "/" },
-          { label: "Leistungen" },
+          { label: t.nav.home, href: "/" },
+          { label: t.nav.services },
         ]}
       />
       <section className="bg-cream py-16 md:py-24">
@@ -50,7 +53,7 @@ function Leistungen() {
                     </h2>
                     <p className="mt-3 text-lg leading-relaxed text-muted">{s.teaser}</p>
                     <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-navy">
-                      Details
+                      {t.nav.details}
                       <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </div>

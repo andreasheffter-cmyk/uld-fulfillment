@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { interpolate, useI18n } from "@/lib/i18n";
 import { company, shopSystems, volumes } from "@/lib/site";
 
 const field =
@@ -86,6 +87,7 @@ function routeMailbox(fields: ReturnType<typeof payloadFromForm>) {
 }
 
 export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
+  const { t } = useI18n();
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -101,9 +103,7 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
       routeMailbox(fields);
       setSent(true);
     } catch {
-      setError(
-        `Senden nicht möglich. Bitte direkt an ${company.email} schreiben oder ${company.phone} anrufen.`,
-      );
+      setError(interpolate(t.form.error, { email: company.email, phone: company.phone }));
     } finally {
       setSending(false);
     }
@@ -115,12 +115,9 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
         <div className="flex size-12 items-center justify-center bg-crimson text-cream">
           <Check className="size-6" strokeWidth={2.4} />
         </div>
-        <h3 className="mt-5 font-display text-3xl font-bold tracking-tight">
-          Anfrage ist raus.
-        </h3>
+        <h3 className="mt-5 font-display text-3xl font-bold tracking-tight">{t.form.sentTitle}</h3>
         <p className={`mt-3 max-w-md leading-relaxed ${inverted ? "text-cream/70" : "text-muted"}`}>
-          Das {company.fulfillmentLead.name} meldet sich in der Regel innerhalb eines Werktags
-          unter {company.email}. Für dringende Fälle: {company.phone}.
+          {interpolate(t.form.sentBody, { email: company.email, phone: company.phone })}
         </p>
       </div>
     );
@@ -131,56 +128,60 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
       <input type="hidden" name="form-name" value="angebot" />
       <p className="hidden">
         <label>
-          Nicht ausfüllen
+          {t.form.honeypot}
           <input name="bot-field" />
         </label>
       </p>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Name</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.name}</span>
         <input name="name" required autoComplete="name" className={field} />
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Firma</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.company}</span>
         <input name="company" required autoComplete="organization" className={field} />
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>E-Mail</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.email}</span>
         <input name="email" type="email" required autoComplete="email" className={field} />
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Telefon</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.phone}</span>
         <input name="phone" type="tel" autoComplete="tel" className={field} />
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Shopsystem</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.shop}</span>
         <select name="shop" className={field} defaultValue="">
           <option value="" disabled>
-            Bitte wählen
+            {t.form.choose}
           </option>
-          {shopSystems.map((s) => (
-            <option key={s}>{s}</option>
+          {shopSystems.map((value, i) => (
+            <option key={value} value={value}>
+              {t.form.shops[i] ?? value}
+            </option>
           ))}
         </select>
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Monatliches Volumen</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.volume}</span>
         <select name="volume" className={field} defaultValue="">
           <option value="" disabled>
-            Bitte wählen
+            {t.form.choose}
           </option>
-          {volumes.map((s) => (
-            <option key={s}>{s}</option>
+          {volumes.map((value, i) => (
+            <option key={value} value={value}>
+              {t.form.volumes[i] ?? value}
+            </option>
           ))}
         </select>
       </label>
       <label className="grid gap-1.5 text-sm font-semibold sm:col-span-2">
-        <span className={inverted ? "text-cream/80" : "text-ink"}>Ihr Vorhaben</span>
+        <span className={inverted ? "text-cream/80" : "text-ink"}>{t.form.message}</span>
         <textarea
           name="message"
           rows={4}
           required
           className={`${field} h-auto min-h-28 py-2.5`}
-          placeholder="Sortiment, Kanäle, gewünschter Start…"
+          placeholder={t.form.placeholder}
         />
       </label>
       <div className="sm:col-span-2">
@@ -188,12 +189,12 @@ export function QuoteForm({ inverted = false }: { inverted?: boolean }) {
           <p className={`mb-3 text-sm ${inverted ? "text-cream" : "text-crimson"}`}>{error}</p>
         ) : null}
         <Button type="submit" size="lg" disabled={sending} className="w-full sm:w-auto">
-          {sending ? "Wird gesendet…" : "Unverbindlich anfragen"}
+          {sending ? t.form.sending : t.form.submit}
         </Button>
         <p className={`mt-3 text-xs leading-relaxed ${inverted ? "text-cream/45" : "text-fog"}`}>
-          Die Anfrage geht an {company.email}. Hinweise in der{" "}
+          {interpolate(t.form.notice, { email: company.email })}{" "}
           <a href="/datenschutz" className="underline underline-offset-2">
-            Datenschutzerklärung
+            {t.form.privacyLink}
           </a>
           .
         </p>

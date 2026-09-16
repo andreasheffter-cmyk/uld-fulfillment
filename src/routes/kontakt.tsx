@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { QuoteForm } from "@/components/quote-form";
+import { useI18n } from "@/lib/i18n";
 import { company } from "@/lib/site";
 import { breadcrumbJsonLd, pageHead } from "@/lib/seo";
 
@@ -18,17 +19,19 @@ export const Route = createFileRoute("/kontakt")({
 });
 
 function Kontakt() {
+  const { t } = useI18n();
+  const p = t.pages.contact;
   return (
     <main>
       <PageHero
-        eyebrow="Kontakt"
-        title="Unverbindliches Erstgespräch."
-        lead="Volumen, Kanäle, Starttermin – wir sagen Ihnen klar, ob und wie das Setup trägt."
+        eyebrow={p.eyebrow}
+        title={p.title}
+        lead={p.lead}
         image="/images/inbound.jpg"
-        imageAlt="Wareneingang im ULD-Fulfillment Hamburg"
+        imageAlt={p.imageAlt}
         crumbs={[
-          { label: "Start", href: "/" },
-          { label: "Kontakt" },
+          { label: t.nav.home, href: "/" },
+          { label: t.nav.contact },
         ]}
       />
 
@@ -36,9 +39,9 @@ function Kontakt() {
         <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-12 md:px-8">
           <div className="md:col-span-5">
             <h2 className="font-display text-3xl font-bold tracking-tight text-navy">
-              Fulfillment-Team
+              {p.teamTitle}
             </h2>
-            <p className="mt-3 leading-relaxed text-muted">ULD Fulfillment Team</p>
+            <p className="mt-3 leading-relaxed text-muted">{t.company.team}</p>
 
             <ul className="mt-8 space-y-5">
               <li className="flex gap-3">
@@ -47,7 +50,7 @@ function Kontakt() {
                   <a href={company.phoneHref} className="font-semibold text-navy">
                     {company.phone}
                   </a>
-                  <p className="text-sm text-muted">{company.hours}</p>
+                  <p className="text-sm text-muted">{t.company.hours}</p>
                 </div>
               </li>
               <li className="flex gap-3">
@@ -73,7 +76,7 @@ function Kontakt() {
             <BrandBox>
               <img
                 src="/images/wms.jpg"
-                alt="Büro von ULD Fulfillment mit Blick auf den Hamburger Hafen"
+                alt={p.officeAlt}
                 className="mt-10 hidden h-56 w-full object-cover md:block"
               />
             </BrandBox>
@@ -83,11 +86,9 @@ function Kontakt() {
             <BrandBox size="lg">
               <div className="bg-paper p-6 md:p-10">
                 <h2 className="font-display text-3xl font-bold tracking-tight text-navy">
-                  Angebot anfordern
+                  {p.formTitle}
                 </h2>
-                <p className="mt-2 mb-8 text-muted">
-                  Kein Online-Konfigurator, kein Bot. Eine operative Einschätzung.
-                </p>
+                <p className="mt-2 mb-8 text-muted">{p.formLead}</p>
                 <QuoteForm />
               </div>
             </BrandBox>

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
+import { useI18n } from "@/lib/i18n";
 import { company } from "@/lib/site";
 import { breadcrumbJsonLd, pageHead } from "@/lib/seo";
 
@@ -15,20 +16,24 @@ export const Route = createFileRoute("/impressum")({
 });
 
 function Impressum() {
+  const { t, locale } = useI18n();
   return (
     <main>
       <PageHero
-        eyebrow="Rechtliches"
-        title="Impressum"
+        eyebrow={t.pages.legal.eyebrow}
+        title={t.pages.legal.imprint}
         crumbs={[
-          { label: "Start", href: "/" },
-          { label: "Impressum" },
+          { label: t.nav.home, href: "/" },
+          { label: t.nav.imprint },
         ]}
       />
       <section className="bg-cream py-16">
         <div className="mx-auto max-w-3xl space-y-8 px-5 text-[0.95rem] leading-relaxed md:px-8">
+          {locale !== "de" ? (
+            <p className="border-l-4 border-crimson pl-4 text-muted">{t.meta.legalNote}</p>
+          ) : null}
           <div>
-            <h2 className="font-display text-2xl font-semibold text-navy">Anbieter</h2>
+            <h2 className="font-display text-2xl font-semibold text-navy">{t.pages.legal.provider}</h2>
             <p className="mt-2">
               {company.legal}
               <br />
@@ -42,7 +47,7 @@ function Impressum() {
             <p className="mt-2">{company.directors.join(", ")}</p>
           </div>
           <div>
-            <h2 className="font-display text-2xl font-semibold text-navy">Kontakt</h2>
+            <h2 className="font-display text-2xl font-semibold text-navy">{t.nav.contact}</h2>
             <p className="mt-2">
               Telefon: {company.phone}
               <br />

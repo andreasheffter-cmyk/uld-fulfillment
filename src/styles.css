@@ -36,6 +36,11 @@
     scroll-behavior: smooth;
   }
 
+  html.locale-zh {
+    --font-display: "Noto Sans SC", "Anybody", sans-serif;
+    --font-sans: "Noto Sans SC", "Source Sans 3", sans-serif;
+  }
+
   body {
     background: var(--color-cream);
     color: var(--color-ink);
