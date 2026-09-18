@@ -17,7 +17,7 @@ export const company = {
   court: "Amtsgericht Hamburg",
   vat: "DE814951797",
   directors: ["Cengiz Cevik", "Knut Dreyer", "Frank Mielke"],
-  editorial: "Vivien Bartz",
+  editorial: "Andreas Heffter",
   fulfillmentLead: {
     name: "ULD Fulfillment Team",
     role: "",
