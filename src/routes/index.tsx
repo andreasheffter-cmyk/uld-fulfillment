@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
+import { AiImage, AiImageBadge } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { QuoteForm } from "@/components/quote-form";
 import { buttonVariants } from "@/components/ui/button";
@@ -36,6 +37,7 @@ function Hero() {
       <img
         src="/images/hero-dock.jpg"
         alt={t.home.heroAlt}
+        data-ai-generated="true"
         className="absolute inset-0 size-full object-cover object-[70%_center]"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-mid/95 via-navy-mid/55 to-navy/15" />
@@ -44,6 +46,7 @@ function Hero() {
         className="pointer-events-none absolute right-8 bottom-8 hidden size-28 border-[10px] border-crimson md:block"
         aria-hidden
       />
+      <AiImageBadge />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pt-32 pb-16 md:justify-center md:px-8 md:pb-24">
         <p className="text-sm font-bold text-navy-ice">{t.company.tagline}</p>
@@ -119,7 +122,7 @@ function Services() {
                 className="group flex h-full flex-col bg-paper shadow-[var(--shadow-border)] transition-[box-shadow] duration-200 hover:shadow-[var(--shadow-border-hover)]"
               >
                 <div className="aspect-[16/10] overflow-hidden">
-                  <img
+                  <AiImage
                     src={s.image}
                     alt={s.imageAlt}
                     className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
@@ -151,11 +154,7 @@ function Split() {
     <section className="bg-navy text-cream">
       <div className="grid md:grid-cols-2">
         <div className="relative min-h-[320px] md:min-h-[560px]">
-          <img
-            src="/images/warehouse-aisle.jpg"
-            alt={t.home.splitAlt}
-            className="absolute inset-0 size-full object-cover"
-          />
+          <AiImage fill src="/images/warehouse-aisle.jpg" alt={t.home.splitAlt} />
         </div>
         <div className="relative flex flex-col justify-center overflow-hidden px-5 py-16 md:px-16 md:py-24">
           <span

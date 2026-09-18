@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { AiImage } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { QuoteForm } from "@/components/quote-form";
@@ -74,10 +75,11 @@ function Kontakt() {
             </ul>
 
             <BrandBox>
-              <img
+              <AiImage
                 src="/images/wms.jpg"
                 alt={p.officeAlt}
-                className="mt-10 hidden h-56 w-full object-cover md:block"
+                wrapperClassName="mt-10 hidden md:block"
+                className="h-56 w-full object-cover"
               />
             </BrandBox>
           </div>

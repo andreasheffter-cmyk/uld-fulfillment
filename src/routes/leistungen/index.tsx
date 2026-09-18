@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AiImage } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { localizedServices, useI18n } from "@/lib/i18n";
@@ -44,7 +45,7 @@ function Leistungen() {
                   className="group grid bg-paper shadow-[var(--shadow-border)] transition-[box-shadow] hover:shadow-[var(--shadow-border-hover)] md:grid-cols-2"
                 >
                   <div className={`relative min-h-[240px] ${i % 2 === 1 ? "md:order-2" : ""}`}>
-                    <img src={s.image} alt={s.imageAlt} className="absolute inset-0 size-full object-cover" />
+                    <AiImage fill src={s.image} alt={s.imageAlt} />
                   </div>
                   <div className="flex flex-col justify-center p-7 md:p-12">
                     <p className="text-sm font-bold text-navy">{s.eyebrow}</p>

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AiImage } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { buttonVariants } from "@/components/ui/button";
@@ -52,7 +53,7 @@ function About() {
             </p>
           </div>
           <BrandBox size="lg">
-            <img
+            <AiImage
               src="/images/wms.jpg"
               alt={p.officeAlt}
               className="h-[28rem] w-full object-cover object-top"

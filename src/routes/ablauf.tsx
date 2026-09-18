@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AiImage } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { buttonVariants } from "@/components/ui/button";
@@ -53,7 +54,7 @@ function Ablauf() {
 
           <div className="mt-16">
             <BrandBox size="lg">
-              <img
+              <AiImage
                 src="/images/ops-manager.jpg"
                 alt={p.teamAlt}
                 className="aspect-video w-full object-cover"

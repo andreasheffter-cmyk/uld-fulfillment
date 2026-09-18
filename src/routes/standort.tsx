@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AiImage } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { PageHero } from "@/components/page-hero";
 import { buttonVariants } from "@/components/ui/button";
@@ -38,10 +39,11 @@ function Standort() {
 
       <section className="bg-cream">
         <div className="grid md:grid-cols-2">
-          <img
+          <AiImage
             src="/images/customs.jpg"
             alt={p.customsAlt}
-            className="h-72 w-full object-cover md:h-full"
+            wrapperClassName="h-72 w-full md:h-full"
+            className="size-full object-cover"
           />
           <div className="flex flex-col justify-center px-5 py-14 md:px-14">
             <h2 className="font-display text-4xl font-bold tracking-tight text-navy">{p.saveTitle}</h2>
@@ -64,7 +66,7 @@ function Standort() {
       <section className="bg-cream py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-2 md:px-8">
           <BrandBox size="lg">
-            <img
+            <AiImage
               src="/images/inbound.jpg"
               alt={p.inboundAlt}
               className="h-80 w-full object-cover"
