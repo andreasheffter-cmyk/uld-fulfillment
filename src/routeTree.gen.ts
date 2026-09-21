@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AblaufRouteImport } from './routes/ablauf'
+import { Route as AndreasHeffterRouteImport } from './routes/andreas-heffter'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as KontaktRouteImport } from './routes/kontakt'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const AblaufRoute = AblaufRouteImport.update({
   id: '/ablauf',
   path: '/ablauf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AndreasHeffterRoute = AndreasHeffterRouteImport.update({
+  id: '/andreas-heffter',
+  path: '/andreas-heffter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DatenschutzRoute = DatenschutzRouteImport.update({
@@ -68,6 +74,7 @@ const LeistungenSlugRoute = LeistungenSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ablauf': typeof AblaufRoute
+  '/andreas-heffter': typeof AndreasHeffterRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ablauf': typeof AblaufRoute
+  '/andreas-heffter': typeof AndreasHeffterRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ablauf': typeof AblaufRoute
+  '/andreas-heffter': typeof AndreasHeffterRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ablauf'
+    | '/andreas-heffter'
     | '/datenschutz'
     | '/impressum'
     | '/kontakt'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ablauf'
+    | '/andreas-heffter'
     | '/datenschutz'
     | '/impressum'
     | '/kontakt'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ablauf'
+    | '/andreas-heffter'
     | '/datenschutz'
     | '/impressum'
     | '/kontakt'
@@ -138,6 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AblaufRoute: typeof AblaufRoute
+  AndreasHeffterRoute: typeof AndreasHeffterRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
   KontaktRoute: typeof KontaktRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/ablauf'
       fullPath: '/ablauf'
       preLoaderRoute: typeof AblaufRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/andreas-heffter': {
+      id: '/andreas-heffter'
+      path: '/andreas-heffter'
+      fullPath: '/andreas-heffter'
+      preLoaderRoute: typeof AndreasHeffterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/datenschutz': {
@@ -218,6 +238,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AblaufRoute: AblaufRoute,
+  AndreasHeffterRoute: AndreasHeffterRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
   KontaktRoute: KontaktRoute,
