@@ -17,6 +17,7 @@ import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as StandortRouteImport } from './routes/standort'
 import { Route as UeberUnsRouteImport } from './routes/ueber-uns'
+import { Route as YasamSeyhanRouteImport } from './routes/yasam-seyhan'
 import { Route as LeistungenIndexRouteImport } from './routes/leistungen/index'
 import { Route as LeistungenSlugRouteImport } from './routes/leistungen/$slug'
 
@@ -60,6 +61,11 @@ const UeberUnsRoute = UeberUnsRouteImport.update({
   path: '/ueber-uns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const YasamSeyhanRoute = YasamSeyhanRouteImport.update({
+  id: '/yasam-seyhan',
+  path: '/yasam-seyhan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LeistungenIndexRoute = LeistungenIndexRouteImport.update({
   id: '/leistungen/',
   path: '/leistungen/',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/kontakt': typeof KontaktRoute
   '/standort': typeof StandortRoute
   '/ueber-uns': typeof UeberUnsRoute
+  '/yasam-seyhan': typeof YasamSeyhanRoute
   '/leistungen/$slug': typeof LeistungenSlugRoute
   '/leistungen/': typeof LeistungenIndexRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/standort': typeof StandortRoute
   '/ueber-uns': typeof UeberUnsRoute
+  '/yasam-seyhan': typeof YasamSeyhanRoute
   '/leistungen/$slug': typeof LeistungenSlugRoute
   '/leistungen': typeof LeistungenIndexRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/kontakt': typeof KontaktRoute
   '/standort': typeof StandortRoute
   '/ueber-uns': typeof UeberUnsRoute
+  '/yasam-seyhan': typeof YasamSeyhanRoute
   '/leistungen/$slug': typeof LeistungenSlugRoute
   '/leistungen/': typeof LeistungenIndexRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/standort'
     | '/ueber-uns'
+    | '/yasam-seyhan'
     | '/leistungen/$slug'
     | '/leistungen/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/standort'
     | '/ueber-uns'
+    | '/yasam-seyhan'
     | '/leistungen/$slug'
     | '/leistungen'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/standort'
     | '/ueber-uns'
+    | '/yasam-seyhan'
     | '/leistungen/$slug'
     | '/leistungen/'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   KontaktRoute: typeof KontaktRoute
   StandortRoute: typeof StandortRoute
   UeberUnsRoute: typeof UeberUnsRoute
+  YasamSeyhanRoute: typeof YasamSeyhanRoute
   LeistungenSlugRoute: typeof LeistungenSlugRoute
   LeistungenIndexRoute: typeof LeistungenIndexRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UeberUnsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/yasam-seyhan': {
+      id: '/yasam-seyhan'
+      path: '/yasam-seyhan'
+      fullPath: '/yasam-seyhan'
+      preLoaderRoute: typeof YasamSeyhanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/leistungen/': {
       id: '/leistungen/'
       path: '/leistungen'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   KontaktRoute: KontaktRoute,
   StandortRoute: StandortRoute,
   UeberUnsRoute: UeberUnsRoute,
+  YasamSeyhanRoute: YasamSeyhanRoute,
   LeistungenSlugRoute: LeistungenSlugRoute,
   LeistungenIndexRoute: LeistungenIndexRoute,
 }

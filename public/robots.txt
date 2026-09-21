@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /__grok/
 Disallow: /andreas-heffter
+Disallow: /yasam-seyhan
 
 Sitemap: https://uld-fulfillment.de/sitemap.xml
