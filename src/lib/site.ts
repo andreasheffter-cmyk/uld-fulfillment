@@ -176,7 +176,7 @@ export const services: Service[] = [
     eyebrow: "Ware hereinholen",
     teaser:
       "Container vom Terminal ins eigene Zolllager. Verzollen, wenn Sie wollen – nicht wenn der Hafen drängt.",
-    image: "/images/customs.jpg?v=4",
+    image: "/images/hamburg-hafen-vorschau.jpg",
     imageAlt: "Containerterminal im Hamburger Hafen mit Anschluss an das ULD-Zolllager",
     lead: "Mit eigenem Zolllager im Hamburger Hafen senken Sie Terminalkosten und behalten den Takt.",
     body: [
