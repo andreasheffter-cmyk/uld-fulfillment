@@ -28,7 +28,7 @@ function About() {
         eyebrow={p.eyebrow}
         title={p.title}
         lead={p.lead}
-        image="/images/ops-manager.jpg?v=3"
+        image="/images/ops-manager.jpg?v=4"
         imageAlt={p.imageAlt}
         crumbs={[
           { label: t.nav.home, href: "/" },
@@ -54,7 +54,7 @@ function About() {
           </div>
           <BrandBox size="lg">
             <AiImage
-              src="/images/wms.jpg?v=3"
+              src="/images/wms.jpg?v=4"
               alt={p.officeAlt}
               className="h-[28rem] w-full object-cover object-top"
             />

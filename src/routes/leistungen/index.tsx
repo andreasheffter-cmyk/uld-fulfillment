@@ -27,7 +27,7 @@ function Leistungen() {
         eyebrow={p.eyebrow}
         title={p.title}
         lead={p.lead}
-        image="/images/pick-pack.jpg?v=3"
+        image="/images/pick-pack.jpg?v=4"
         imageAlt={p.imageAlt}
         crumbs={[
           { label: t.nav.home, href: "/" },

@@ -28,7 +28,7 @@ function Kontakt() {
         eyebrow={p.eyebrow}
         title={p.title}
         lead={p.lead}
-        image="/images/inbound.jpg?v=3"
+        image="/images/inbound.jpg?v=4"
         imageAlt={p.imageAlt}
         crumbs={[
           { label: t.nav.home, href: "/" },
@@ -76,7 +76,7 @@ function Kontakt() {
 
             <BrandBox>
               <AiImage
-                src="/images/wms.jpg?v=3"
+                src="/images/wms.jpg?v=4"
                 alt={p.officeAlt}
                 wrapperClassName="mt-10 hidden md:block"
                 className="h-56 w-full object-cover"

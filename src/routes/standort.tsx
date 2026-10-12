@@ -29,7 +29,7 @@ function Standort() {
         eyebrow={p.eyebrow}
         title={p.title}
         lead={interpolate(p.lead, { address: company.address, zip: company.zip })}
-        image="/images/hamburg-port.jpg?v=3"
+        image="/images/hamburg-port.jpg?v=4"
         imageAlt={p.imageAlt}
         crumbs={[
           { label: t.nav.home, href: "/" },
@@ -40,7 +40,7 @@ function Standort() {
       <section className="bg-cream">
         <div className="grid md:grid-cols-2">
           <AiImage
-            src="/images/customs.jpg?v=3"
+            src="/images/customs.jpg?v=4"
             alt={p.customsAlt}
             wrapperClassName="h-72 w-full md:h-full"
             className="size-full object-cover"
@@ -67,7 +67,7 @@ function Standort() {
         <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-2 md:px-8">
           <BrandBox size="lg">
             <AiImage
-              src="/images/inbound.jpg?v=3"
+              src="/images/inbound.jpg?v=4"
               alt={p.inboundAlt}
               className="h-80 w-full object-cover"
             />
