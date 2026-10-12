@@ -1,4 +1,3 @@
-import { AiImageBadge } from "@/components/ai-image";
 import { Breadcrumb, type Crumb } from "@/components/breadcrumb";
 
 export function PageHero({
@@ -23,12 +22,10 @@ export function PageHero({
           <img
             src={image}
             alt={imageAlt}
-            data-ai-generated="true"
             className="absolute inset-0 size-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-navy-mid via-navy-mid/75 to-navy/35" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-mid/90 via-transparent to-navy-mid/40" />
-          <AiImageBadge />
         </>
       ) : (
         <span

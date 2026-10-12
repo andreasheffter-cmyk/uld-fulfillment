@@ -1,6 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
-import { AiImageBadge } from "@/components/ai-image";
 import { BrandBox } from "@/components/brand-box";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buttonVariants } from "@/components/ui/button";
@@ -31,7 +30,6 @@ function ServicePage() {
         <img
           src={meta.image}
           alt={service.imageAlt}
-          data-ai-generated="true"
           className="absolute inset-0 size-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-mid via-navy-mid/70 to-navy/30" />
@@ -40,7 +38,6 @@ function ServicePage() {
           className="pointer-events-none absolute right-8 bottom-8 hidden size-24 border-[8px] border-crimson md:block"
           aria-hidden
         />
-        <AiImageBadge />
         <div className="relative mx-auto flex min-h-[70svh] max-w-7xl flex-col justify-end px-5 pt-32 pb-16 md:px-8">
           <Breadcrumb
             items={[
