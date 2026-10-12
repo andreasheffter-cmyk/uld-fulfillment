@@ -35,7 +35,7 @@ function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-navy-mid text-cream">
       <img
-        src="/images/hero-dock.jpg?v=2"
+        src="/images/hero-dock.jpg?v=3"
         alt={t.home.heroAlt}
         className="absolute inset-0 size-full object-cover object-[70%_center]"
       />
@@ -152,7 +152,7 @@ function Split() {
     <section className="bg-navy text-cream">
       <div className="grid md:grid-cols-2">
         <div className="relative min-h-[320px] md:min-h-[560px]">
-          <AiImage fill src="/images/warehouse-aisle.jpg?v=2" alt={t.home.splitAlt} />
+          <AiImage fill src="/images/warehouse-aisle.jpg?v=3" alt={t.home.splitAlt} />
         </div>
         <div className="relative flex flex-col justify-center overflow-hidden px-5 py-16 md:px-16 md:py-24">
           <span

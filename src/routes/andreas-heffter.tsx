@@ -37,7 +37,7 @@ function AndreasHeffter() {
     <main>
       <section className="relative overflow-hidden bg-navy-mid pt-[4.5rem] md:pt-[5.5rem]">
         <AiImage
-          src="/images/uld-dynamic.png?v=2"
+          src="/images/uld-dynamic.png?v=3"
           alt="ULD-Lager: Scanvorgang im Schmalgang – Andreas Heffter, Warehouse Manager"
           className="aspect-[16/9] w-full object-cover object-center md:aspect-[21/9] md:max-h-[70vh]"
         />

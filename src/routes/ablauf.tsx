@@ -28,7 +28,7 @@ function Ablauf() {
         eyebrow={p.eyebrow}
         title={p.title}
         lead={p.lead}
-        image="/images/warehouse-aisle.jpg?v=2"
+        image="/images/warehouse-aisle.jpg?v=3"
         imageAlt={p.imageAlt}
         crumbs={[
           { label: t.nav.home, href: "/" },
@@ -55,7 +55,7 @@ function Ablauf() {
           <div className="mt-16">
             <BrandBox size="lg">
               <AiImage
-                src="/images/ops-manager.jpg?v=2"
+                src="/images/ops-manager.jpg?v=3"
                 alt={p.teamAlt}
                 className="aspect-video w-full object-cover"
               />
