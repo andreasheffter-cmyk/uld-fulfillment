@@ -64,7 +64,7 @@ export const services: Service[] = [
     eyebrow: "Bestände steuern",
     teaser:
       "Fachboden, Palette, Blocklager – eingerichtet auf Ihre Artikelstruktur, nicht umgekehrt.",
-    image: "/images/warehouse-aisle.jpg",
+    image: "/images/warehouse-aisle.jpg?v=2",
     imageAlt: "Schmalganglager im ULD-Fulfillment-Lager im Hamburger Hafen",
     lead: "Ihre Ware liegt im Hamburger Hafen. Scanbasiert, zonenklar, jederzeit auskunftsfähig.",
     body: [
@@ -86,7 +86,7 @@ export const services: Service[] = [
     eyebrow: "Aufträge umsetzen",
     teaser:
       "Einzelstück, Karton oder Palette – kommissioniert, geprüft, versandfertig. Am selben Tag.",
-    image: "/images/pick-pack.jpg",
+    image: "/images/pick-pack.jpg?v=2",
     imageAlt:
       "Pick-and-Pack-Station: Kommissionierung und Versandfertigmachen bei ULD Hamburg",
     lead: "Jede Bestellung wird scanbasiert kommissioniert und nach Ihren Packregeln versandfertig gemacht.",
@@ -109,7 +109,7 @@ export const services: Service[] = [
     eyebrow: "Zustellung steuern",
     teaser:
       "Carrier nach Laufzeit und Kosten. Tracking zurück in Ihren Shop. Europaweit ab Hamburg.",
-    image: "/images/outbound.jpg",
+    image: "/images/outbound.jpg?v=2",
     imageAlt:
       "ULD-Fulfillment im Hamburger Hafen: Sattelzüge vor der Halle, Containerbrücken und Terminal im Hintergrund",
     lead: "Vom Packplatz an die Rampe, vom Hafen in die Fläche – mit festen Zeitfenstern und klarem Tracking.",
@@ -132,7 +132,7 @@ export const services: Service[] = [
     eyebrow: "Ware zurückführen",
     teaser:
       "Annahme, Prüfung, Wiedereinlagerung. Damit Retouren kein blinder Fleck in Ihrer Marge bleiben.",
-    image: "/images/returns.jpg",
+    image: "/images/returns.jpg?v=2",
     imageAlt: "Retourenbearbeitung bei ULD: Prüfung und Wiedereinlagerung im Hamburger Lager",
     lead: "Retouren nehmen wir strukturiert an, prüfen Zustand und Inhalt und führen einlagerungsfähige Ware kontrolliert zurück.",
     body: [
@@ -154,7 +154,7 @@ export const services: Service[] = [
     eyebrow: "Ware vorbereiten",
     teaser:
       "Umpacken, Etikettieren, Displays, Sets. Damit Kampagnen ohne Extra-Umlagerung starten.",
-    image: "/images/kitting.jpg",
+    image: "/images/kitting.jpg?v=2",
     imageAlt: "Kitting und Konfektionierung: Setbildung am Arbeitstisch im ULD-Lager Hamburg",
     lead: "Konfektionierung sitzt bei uns im Prozess – nicht in einem zweiten Lager am anderen Ende der Stadt.",
     body: [
@@ -176,7 +176,7 @@ export const services: Service[] = [
     eyebrow: "Ware hereinholen",
     teaser:
       "Container vom Terminal ins eigene Zolllager. Verzollen, wenn Sie wollen – nicht wenn der Hafen drängt.",
-    image: "/images/customs.jpg",
+    image: "/images/customs.jpg?v=2",
     imageAlt: "Containerterminal im Hamburger Hafen mit Anschluss an das ULD-Zolllager",
     lead: "Mit eigenem Zolllager im Hamburger Hafen senken Sie Terminalkosten und behalten den Takt.",
     body: [

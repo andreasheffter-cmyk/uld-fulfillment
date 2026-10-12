@@ -35,12 +35,12 @@ function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-navy-mid text-cream">
       <img
-        src="/images/hero-dock.jpg"
+        src="/images/hero-dock.jpg?v=2"
         alt={t.home.heroAlt}
         className="absolute inset-0 size-full object-cover object-[70%_center]"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-mid/95 via-navy-mid/55 to-navy/15" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-mid/85 via-transparent to-navy-mid/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-mid/88 via-navy-mid/35 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-mid/70 via-transparent to-navy-mid/15" />
       <span
         className="pointer-events-none absolute right-8 bottom-8 hidden size-28 border-[10px] border-crimson md:block"
         aria-hidden
@@ -152,7 +152,7 @@ function Split() {
     <section className="bg-navy text-cream">
       <div className="grid md:grid-cols-2">
         <div className="relative min-h-[320px] md:min-h-[560px]">
-          <AiImage fill src="/images/warehouse-aisle.jpg" alt={t.home.splitAlt} />
+          <AiImage fill src="/images/warehouse-aisle.jpg?v=2" alt={t.home.splitAlt} />
         </div>
         <div className="relative flex flex-col justify-center overflow-hidden px-5 py-16 md:px-16 md:py-24">
           <span
