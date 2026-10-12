@@ -40,7 +40,7 @@ function Standort() {
       <section className="bg-cream">
         <div className="grid md:grid-cols-2">
           <AiImage
-            src="/images/customs.jpg?v=4"
+            src="/images/hamburg-hafen-vorschau.jpg"
             alt={p.customsAlt}
             wrapperClassName="h-72 w-full md:h-full"
             className="size-full object-cover"
