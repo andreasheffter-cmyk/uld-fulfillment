@@ -35,7 +35,7 @@ function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-navy-mid text-cream">
       <img
-        src="/images/hero-dock.jpg?v=4"
+        src="/images/hero-dock.jpg?v=5"
         alt={t.home.heroAlt}
         className="absolute inset-0 size-full object-cover object-[70%_center]"
       />
